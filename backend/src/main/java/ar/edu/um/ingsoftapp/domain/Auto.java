@@ -53,7 +53,7 @@ public class Auto implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "auto")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "auto" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "auto", "user" }, allowSetters = true)
     private Set<Alquiler> alquilers = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

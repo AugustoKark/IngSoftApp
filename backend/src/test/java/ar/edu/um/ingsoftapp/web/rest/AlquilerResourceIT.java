@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import ar.edu.um.ingsoftapp.IntegrationTest;
 import ar.edu.um.ingsoftapp.domain.Alquiler;
 import ar.edu.um.ingsoftapp.repository.AlquilerRepository;
+import ar.edu.um.ingsoftapp.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
@@ -49,6 +50,9 @@ class AlquilerResourceIT {
 
     @Autowired
     private AlquilerRepository alquilerRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     private EntityManager em;
@@ -292,6 +296,8 @@ class AlquilerResourceIT {
         // Update the alquiler using partial update
         Alquiler partialUpdatedAlquiler = new Alquiler();
         partialUpdatedAlquiler.setId(alquiler.getId());
+
+        partialUpdatedAlquiler.precioFinal(UPDATED_PRECIO_FINAL);
 
         restAlquilerMockMvc
             .perform(

@@ -9,8 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IAuto } from 'app/entities/auto/auto.model';
 import { AutoService } from 'app/entities/auto/service/auto.service';
-import { IAlquiler } from '../alquiler.model';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/service/user.service';
 import { AlquilerService } from '../service/alquiler.service';
+import { IAlquiler } from '../alquiler.model';
 import { AlquilerFormGroup, AlquilerFormService } from './alquiler-form.service';
 
 @Component({
@@ -24,16 +26,20 @@ export class AlquilerUpdateComponent implements OnInit {
   alquiler: IAlquiler | null = null;
 
   autosSharedCollection: IAuto[] = [];
+  usersSharedCollection: IUser[] = [];
 
   protected alquilerService = inject(AlquilerService);
   protected alquilerFormService = inject(AlquilerFormService);
   protected autoService = inject(AutoService);
+  protected userService = inject(UserService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: AlquilerFormGroup = this.alquilerFormService.createAlquilerFormGroup();
 
   compareAuto = (o1: IAuto | null, o2: IAuto | null): boolean => this.autoService.compareAuto(o1, o2);
+
+  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ alquiler }) => {
@@ -84,6 +90,7 @@ export class AlquilerUpdateComponent implements OnInit {
     this.alquilerFormService.resetForm(this.editForm, alquiler);
 
     this.autosSharedCollection = this.autoService.addAutoToCollectionIfMissing<IAuto>(this.autosSharedCollection, alquiler.auto);
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, alquiler.user);
   }
 
   protected loadRelationshipsOptions(): void {
@@ -92,5 +99,11 @@ export class AlquilerUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<IAuto[]>) => res.body ?? []))
       .pipe(map((autos: IAuto[]) => this.autoService.addAutoToCollectionIfMissing<IAuto>(autos, this.alquiler?.auto)))
       .subscribe((autos: IAuto[]) => (this.autosSharedCollection = autos));
+
+    this.userService
+      .query()
+      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
+      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.alquiler?.user)))
+      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
   }
 }

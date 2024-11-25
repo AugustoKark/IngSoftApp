@@ -385,7 +385,7 @@ class AutoResourceIT {
         Auto partialUpdatedAuto = new Auto();
         partialUpdatedAuto.setId(auto.getId());
 
-        partialUpdatedAuto.transmision(UPDATED_TRANSMISION).precio(UPDATED_PRECIO).img(UPDATED_IMG);
+        partialUpdatedAuto.km(UPDATED_KM).hp(UPDATED_HP).transmision(UPDATED_TRANSMISION).precio(UPDATED_PRECIO);
 
         restAutoMockMvc
             .perform(

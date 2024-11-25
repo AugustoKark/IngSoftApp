@@ -6,8 +6,10 @@ import { Subject, from, of } from 'rxjs';
 
 import { IAuto } from 'app/entities/auto/auto.model';
 import { AutoService } from 'app/entities/auto/service/auto.service';
-import { AlquilerService } from '../service/alquiler.service';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/service/user.service';
 import { IAlquiler } from '../alquiler.model';
+import { AlquilerService } from '../service/alquiler.service';
 import { AlquilerFormService } from './alquiler-form.service';
 
 import { AlquilerUpdateComponent } from './alquiler-update.component';
@@ -19,6 +21,7 @@ describe('Alquiler Management Update Component', () => {
   let alquilerFormService: AlquilerFormService;
   let alquilerService: AlquilerService;
   let autoService: AutoService;
+  let userService: UserService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,6 +45,7 @@ describe('Alquiler Management Update Component', () => {
     alquilerFormService = TestBed.inject(AlquilerFormService);
     alquilerService = TestBed.inject(AlquilerService);
     autoService = TestBed.inject(AutoService);
+    userService = TestBed.inject(UserService);
 
     comp = fixture.componentInstance;
   });
@@ -49,10 +53,10 @@ describe('Alquiler Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Auto query and add missing value', () => {
       const alquiler: IAlquiler = { id: 456 };
-      const auto: IAuto = { id: 1277 };
+      const auto: IAuto = { id: 13383 };
       alquiler.auto = auto;
 
-      const autoCollection: IAuto[] = [{ id: 10349 }];
+      const autoCollection: IAuto[] = [{ id: 2059 }];
       jest.spyOn(autoService, 'query').mockReturnValue(of(new HttpResponse({ body: autoCollection })));
       const additionalAutos = [auto];
       const expectedCollection: IAuto[] = [...additionalAutos, ...autoCollection];
@@ -69,15 +73,40 @@ describe('Alquiler Management Update Component', () => {
       expect(comp.autosSharedCollection).toEqual(expectedCollection);
     });
 
+    it('Should call User query and add missing value', () => {
+      const alquiler: IAlquiler = { id: 456 };
+      const user: IUser = { id: 15931 };
+      alquiler.user = user;
+
+      const userCollection: IUser[] = [{ id: 29519 }];
+      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
+      const additionalUsers = [user];
+      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
+      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ alquiler });
+      comp.ngOnInit();
+
+      expect(userService.query).toHaveBeenCalled();
+      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
+        userCollection,
+        ...additionalUsers.map(expect.objectContaining),
+      );
+      expect(comp.usersSharedCollection).toEqual(expectedCollection);
+    });
+
     it('Should update editForm', () => {
       const alquiler: IAlquiler = { id: 456 };
-      const auto: IAuto = { id: 29909 };
+      const auto: IAuto = { id: 6616 };
       alquiler.auto = auto;
+      const user: IUser = { id: 14172 };
+      alquiler.user = user;
 
       activatedRoute.data = of({ alquiler });
       comp.ngOnInit();
 
       expect(comp.autosSharedCollection).toContain(auto);
+      expect(comp.usersSharedCollection).toContain(user);
       expect(comp.alquiler).toEqual(alquiler);
     });
   });
@@ -158,6 +187,16 @@ describe('Alquiler Management Update Component', () => {
         jest.spyOn(autoService, 'compareAuto');
         comp.compareAuto(entity, entity2);
         expect(autoService.compareAuto).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareUser', () => {
+      it('Should forward to userService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(userService, 'compareUser');
+        comp.compareUser(entity, entity2);
+        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

@@ -1,26 +1,26 @@
 import { IAlquiler, NewAlquiler } from './alquiler.model';
 
 export const sampleWithRequiredData: IAlquiler = {
-  id: 11223,
-  dias: 17667,
-  precioFinal: 14502.48,
+  id: 4216,
+  dias: 4809,
+  precioFinal: 24301.42,
 };
 
 export const sampleWithPartialData: IAlquiler = {
-  id: 22291,
-  dias: 14946,
-  precioFinal: 31610.41,
+  id: 676,
+  dias: 17333,
+  precioFinal: 21603.34,
 };
 
 export const sampleWithFullData: IAlquiler = {
-  id: 13774,
-  dias: 3575,
-  precioFinal: 26062.2,
+  id: 30891,
+  dias: 27215,
+  precioFinal: 11119.46,
 };
 
 export const sampleWithNewData: NewAlquiler = {
-  dias: 13712,
-  precioFinal: 6350.93,
+  dias: 6913,
+  precioFinal: 30893.5,
   id: null,
 };
 

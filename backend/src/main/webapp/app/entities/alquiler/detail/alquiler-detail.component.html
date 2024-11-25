@@ -31,6 +31,10 @@
               </div>
             }
           </dd>
+          <dt><span jhiTranslate="rentalCarApp.alquiler.user">User</span></dt>
+          <dd>
+            <span>{{ alquilerRef.user?.id }}</span>
+          </dd>
         </dl>
 
         <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

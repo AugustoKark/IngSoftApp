@@ -16,5 +16,12 @@
                                  referencedColumnNames="id"
                                  referencedTableName="auto"
                                  />
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="alquiler"
+                                 constraintName="fk_alquiler__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"
+                                 />
     </changeSet>
 </databaseChangeLog>

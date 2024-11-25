@@ -20,7 +20,8 @@
       "id": "ID",
       "dias": "Dias",
       "precioFinal": "Precio Final",
-      "auto": "Auto"
+      "auto": "Auto",
+      "user": "User"
     }
   }
 }

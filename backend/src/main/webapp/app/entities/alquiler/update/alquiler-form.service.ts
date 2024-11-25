@@ -21,6 +21,7 @@ type AlquilerFormGroupContent = {
   dias: FormControl<IAlquiler['dias']>;
   precioFinal: FormControl<IAlquiler['precioFinal']>;
   auto: FormControl<IAlquiler['auto']>;
+  user: FormControl<IAlquiler['user']>;
 };
 
 export type AlquilerFormGroup = FormGroup<AlquilerFormGroupContent>;
@@ -47,6 +48,7 @@ export class AlquilerFormService {
         validators: [Validators.required],
       }),
       auto: new FormControl(alquilerRawValue.auto),
+      user: new FormControl(alquilerRawValue.user),
     });
   }
 

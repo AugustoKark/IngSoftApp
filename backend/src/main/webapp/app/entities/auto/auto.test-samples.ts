@@ -1,41 +1,41 @@
 import { IAuto, NewAuto } from './auto.model';
 
 export const sampleWithRequiredData: IAuto = {
-  id: 15937,
-  modelo: 'amnesty allegation',
-  km: 30178,
-  hp: 27452,
-  transmision: 'whenever instruction',
-  precio: 8637.78,
+  id: 22188,
+  modelo: 'card disadvantage',
+  km: 19750,
+  hp: 25070,
+  transmision: 'swath brr scholarship',
+  precio: 29707.28,
 };
 
 export const sampleWithPartialData: IAuto = {
-  id: 15376,
-  modelo: 'cope grandson measly',
-  km: 15632,
-  hp: 20843,
-  transmision: 'regularly geez worst',
-  precio: 12269.12,
-  img: 'scientific deform provided',
+  id: 6061,
+  modelo: 'violently er',
+  km: 17667,
+  hp: 30257,
+  transmision: 'how',
+  precio: 26891.74,
+  img: 'quadruple hundred quizzically',
 };
 
 export const sampleWithFullData: IAuto = {
-  id: 25338,
-  modelo: 'gripping muted slipper',
-  km: 18512,
-  hp: 21657,
-  transmision: 'denitrify unless',
-  precio: 28715.15,
-  descripcion: 'although',
-  img: 'along enthusiastically creak',
+  id: 26191,
+  modelo: 'wherever',
+  km: 19512,
+  hp: 7125,
+  transmision: 'gum even fraternise',
+  precio: 3084.52,
+  descripcion: 'phooey astride',
+  img: 'dulcimer',
 };
 
 export const sampleWithNewData: NewAuto = {
-  modelo: 'since',
-  km: 24616,
-  hp: 24304,
-  transmision: 'yowza',
-  precio: 31936.32,
+  modelo: 'upbeat with bruised',
+  km: 12758,
+  hp: 8759,
+  transmision: 'duh wise',
+  precio: 10560.12,
   id: null,
 };
 

@@ -1,6 +1,7 @@
 package ar.edu.um.ingsoftapp.repository;
 
 import ar.edu.um.ingsoftapp.domain.Alquiler;
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {}
+public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
+    @Query("select alquiler from Alquiler alquiler where alquiler.user.login = ?#{authentication.name}")
+    List<Alquiler> findByUserIsCurrentUser();
+}

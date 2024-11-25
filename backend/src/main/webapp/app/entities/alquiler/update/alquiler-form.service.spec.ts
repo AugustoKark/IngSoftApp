@@ -23,6 +23,7 @@ describe('Alquiler Form Service', () => {
             dias: expect.any(Object),
             precioFinal: expect.any(Object),
             auto: expect.any(Object),
+            user: expect.any(Object),
           }),
         );
       });
@@ -36,6 +37,7 @@ describe('Alquiler Form Service', () => {
             dias: expect.any(Object),
             precioFinal: expect.any(Object),
             auto: expect.any(Object),
+            user: expect.any(Object),
           }),
         );
       });

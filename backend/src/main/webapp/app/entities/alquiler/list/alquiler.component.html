@@ -62,6 +62,12 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="user.id">
+              <div class="d-flex">
+                <span jhiTranslate="rentalCarApp.alquiler.user">User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -79,6 +85,9 @@
                     <a [routerLink]="['/auto', alquiler.auto.id, 'view']">{{ alquiler.auto.id }}</a>
                   </div>
                 }
+              </td>
+              <td>
+                {{ alquiler.user?.id }}
               </td>
               <td class="text-end">
                 <div class="btn-group">
