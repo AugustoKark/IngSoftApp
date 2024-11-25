@@ -1,0 +1,18 @@
+entity Auto {
+    modelo String required,
+    km Integer required,
+    hp Integer required,
+    transmision String required, // Puede ser "manual" o "automático"
+    precio Double required,
+    descripcion String,
+    img String
+}
+
+entity Alquiler {
+    dias Integer required,
+    precioFinal Double required
+}
+
+relationship OneToMany {
+    Auto to Alquiler
+}

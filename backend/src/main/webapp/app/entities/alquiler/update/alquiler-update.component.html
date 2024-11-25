@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-alquiler-heading" data-cy="AlquilerCreateUpdateHeading" jhiTranslate="rentalCarApp.alquiler.home.createOrEditLabel">
+        Create or edit a Alquiler
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="rentalCarApp.alquiler.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let diasRef = editForm.get('dias')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_dias" jhiTranslate="rentalCarApp.alquiler.dias">Dias</label>
+          <input type="number" class="form-control" name="dias" id="field_dias" data-cy="dias" formControlName="dias" />
+          @if (diasRef.invalid && (diasRef.dirty || diasRef.touched)) {
+            <div>
+              @if (editForm.get('dias')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('dias')?.errors?.number" jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let precioFinalRef = editForm.get('precioFinal')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_precioFinal" jhiTranslate="rentalCarApp.alquiler.precioFinal">Precio Final</label>
+          <input
+            type="number"
+            class="form-control"
+            name="precioFinal"
+            id="field_precioFinal"
+            data-cy="precioFinal"
+            formControlName="precioFinal"
+          />
+          @if (precioFinalRef.invalid && (precioFinalRef.dirty || precioFinalRef.touched)) {
+            <div>
+              @if (editForm.get('precioFinal')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('precioFinal')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_auto" jhiTranslate="rentalCarApp.alquiler.auto">Auto</label>
+          <select class="form-control" id="field_auto" data-cy="auto" name="auto" formControlName="auto" [compareWith]="compareAuto">
+            <option [ngValue]="null"></option>
+            @for (autoOption of autosSharedCollection; track $index) {
+              <option [ngValue]="autoOption">{{ autoOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

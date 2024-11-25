@@ -1,0 +1,26 @@
+{
+  "rentalCarApp": {
+    "alquiler": {
+      "home": {
+        "title": "Alquilers",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Alquiler",
+        "createOrEditLabel": "Crear o editar Alquiler",
+        "notFound": "Ningún Alquilers encontrado"
+      },
+      "created": "Un nuevo Alquiler ha sido creado con el identificador {{ param }}",
+      "updated": "Un Alquiler ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Alquiler ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Alquiler {{ id }}?"
+      },
+      "detail": {
+        "title": "Alquiler"
+      },
+      "id": "ID",
+      "dias": "Dias",
+      "precioFinal": "Precio Final",
+      "auto": "Auto"
+    }
+  }
+}

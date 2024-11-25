@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20241125194000"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "dias",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "precioFinal",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Alquiler",
+  "relationships": [
+    {
+      "otherEntityName": "auto",
+      "otherEntityRelationshipName": "alquiler",
+      "relationshipName": "auto",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

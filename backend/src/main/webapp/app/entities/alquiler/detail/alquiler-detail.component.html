@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (alquiler(); as alquilerRef) {
+      <div>
+        <h2 data-cy="alquilerDetailsHeading"><span jhiTranslate="rentalCarApp.alquiler.detail.title">Alquiler</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ alquilerRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="rentalCarApp.alquiler.dias">Dias</span></dt>
+          <dd>
+            <span>{{ alquilerRef.dias }}</span>
+          </dd>
+          <dt><span jhiTranslate="rentalCarApp.alquiler.precioFinal">Precio Final</span></dt>
+          <dd>
+            <span>{{ alquilerRef.precioFinal }}</span>
+          </dd>
+          <dt><span jhiTranslate="rentalCarApp.alquiler.auto">Auto</span></dt>
+          <dd>
+            @if (alquiler()!.auto) {
+              <div>
+                <a [routerLink]="['/auto', alquiler()!.auto?.id, 'view']">{{ alquilerRef.auto?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/alquiler', alquilerRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

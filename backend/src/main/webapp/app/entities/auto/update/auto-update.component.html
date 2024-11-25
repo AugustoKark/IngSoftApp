@@ -1,0 +1,137 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-auto-heading" data-cy="AutoCreateUpdateHeading" jhiTranslate="rentalCarApp.auto.home.createOrEditLabel">
+        Create or edit a Auto
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="rentalCarApp.auto.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let modeloRef = editForm.get('modelo')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_modelo" jhiTranslate="rentalCarApp.auto.modelo">Modelo</label>
+          <input type="text" class="form-control" name="modelo" id="field_modelo" data-cy="modelo" formControlName="modelo" />
+          @if (modeloRef.invalid && (modeloRef.dirty || modeloRef.touched)) {
+            <div>
+              @if (editForm.get('modelo')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let kmRef = editForm.get('km')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_km" jhiTranslate="rentalCarApp.auto.km">Km</label>
+          <input type="number" class="form-control" name="km" id="field_km" data-cy="km" formControlName="km" />
+          @if (kmRef.invalid && (kmRef.dirty || kmRef.touched)) {
+            <div>
+              @if (editForm.get('km')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('km')?.errors?.number" jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let hpRef = editForm.get('hp')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_hp" jhiTranslate="rentalCarApp.auto.hp">Hp</label>
+          <input type="number" class="form-control" name="hp" id="field_hp" data-cy="hp" formControlName="hp" />
+          @if (hpRef.invalid && (hpRef.dirty || hpRef.touched)) {
+            <div>
+              @if (editForm.get('hp')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!editForm.get('hp')?.errors?.number" jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let transmisionRef = editForm.get('transmision')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_transmision" jhiTranslate="rentalCarApp.auto.transmision">Transmision</label>
+          <input
+            type="text"
+            class="form-control"
+            name="transmision"
+            id="field_transmision"
+            data-cy="transmision"
+            formControlName="transmision"
+          />
+          @if (transmisionRef.invalid && (transmisionRef.dirty || transmisionRef.touched)) {
+            <div>
+              @if (editForm.get('transmision')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let precioRef = editForm.get('precio')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_precio" jhiTranslate="rentalCarApp.auto.precio">Precio</label>
+          <input type="number" class="form-control" name="precio" id="field_precio" data-cy="precio" formControlName="precio" />
+          @if (precioRef.invalid && (precioRef.dirty || precioRef.touched)) {
+            <div>
+              @if (editForm.get('precio')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('precio')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_descripcion" jhiTranslate="rentalCarApp.auto.descripcion">Descripcion</label>
+          <input
+            type="text"
+            class="form-control"
+            name="descripcion"
+            id="field_descripcion"
+            data-cy="descripcion"
+            formControlName="descripcion"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_img" jhiTranslate="rentalCarApp.auto.img">Img</label>
+          <input type="text" class="form-control" name="img" id="field_img" data-cy="img" formControlName="img" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
