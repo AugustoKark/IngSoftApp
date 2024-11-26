@@ -70,6 +70,15 @@ export default {
     };
   },
   methods: {
+    switchToLogin() {
+    const loginForm = document.querySelector("form.login");
+    const loginText = document.querySelector(".title-text .login");
+    const loginBtn = document.querySelector("label.login");
+    
+    loginForm.style.marginLeft = "0%";
+    loginText.style.marginLeft = "0%";
+    loginBtn.click();
+  },
     async login() {
       try {
         const response = await fetch('http://localhost:8080/api/authenticate', {
@@ -89,7 +98,8 @@ export default {
         if (response.ok) {
           alert('Login successful');
           // Guarda el token en el almacenamiento local o en una cookie
-          localStorage.setItem('id_token', data.id_token);
+          localStorage.setItem('jwt', data.jwt);
+          localStorage.setItem('userId', data.userId);
           // redirige a la página de inicio
           this.$router.push('/home');
         } else {
@@ -125,6 +135,12 @@ export default {
 
         if (response.ok) {
           alert('Registration successful');
+          this.registerUsername = '';
+        this.registerEmail = '';
+        this.registerPassword = '';
+        this.registerConfirmPassword = '';
+        // Switch to login form
+        this.switchToLogin();
         } else {
           alert('Registration failed');
         }

@@ -37,210 +37,33 @@
     <!--welcome-hero end -->
     <!--featured-cars start -->
     <section id="featured-cars" class="featured-cars">
-      <div class="container">
-        <div class="section-header">
-          <p>Mira <span>nuestra</span> disponibilidad</p>
-          <h2>Autos Disponibles</h2>
-        </div><!--/.section-header-->
-        <div class="featured-cars-content">
-          <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="single-featured-cars">
-                <div class="featured-img-box">
-                  <div class="featured-cars-img">
-                    <img src="@/assets/images/featured-cars/fc1.png" alt="cars">
-                  </div>
-                  <div class="featured-model-info">
-                    <p>
-                      model: 2017
-                      <span class="featured-mi-span"> 3100 mi</span>
-                      <span class="featured-hp-span"> 240HP</span>
-                      automatic
-                    </p>
-                  </div>
-                </div>
-                <div class="featured-cars-txt">
-                  <h2><a href="#">BMW 6-series gran coupe</a></h2>
-                  <h3>$89,395 <button class="rent-button">Alquilar</button></h3>
-                  <p>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                  </p>
-                </div>
-              </div>
+      <div class="featured-cars-content">
+    <div class="row">
+      <div v-for="car in cars" :key="car.id" class="col-lg-3 col-md-4 col-sm-6">
+        <div class="single-featured-cars">
+          <div class="featured-img-box">
+            <div class="featured-cars-img">
+              <img :src="require(`@/assets/images/featured-cars/${car.img}.png`)" alt="cars">
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="single-featured-cars">
-                <div class="featured-img-box">
-                  <div class="featured-cars-img">
-                    <img src="@/assets/images/featured-cars/fc2.png" alt="cars">
-                  </div>
-                  <div class="featured-model-info">
-                    <p>
-                      model: 2017
-                      <span class="featured-mi-span"> 3100 mi</span>
-                      <span class="featured-hp-span"> 240HP</span>
-                      automatic
-                    </p>
-                  </div>
-                </div>
-                <div class="featured-cars-txt">
-                  <h2><a href="#">chevrolet camaro <span>wmv20</span></a></h2>
-                  <h3>$66,575</h3>
-                  <p>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="single-featured-cars">
-                <div class="featured-img-box">
-                  <div class="featured-cars-img">
-                    <img src="@/assets/images/featured-cars/fc3.png" alt="cars">
-                  </div>
-                  <div class="featured-model-info">
-                    <p>
-                      model: 2017
-                      <span class="featured-mi-span"> 3100 mi</span>
-                      <span class="featured-hp-span"> 240HP</span>
-                      automatic
-                    </p>
-                  </div>
-                </div>
-                <div class="featured-cars-txt">
-                  <h2><a href="#">lamborghini <span>v520</span></a></h2>
-                  <h3>$125,250</h3>
-                  <p>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="single-featured-cars">
-                <div class="featured-img-box">
-                  <div class="featured-cars-img">
-                    <img src="@/assets/images/featured-cars/fc4.png" alt="cars">
-                  </div>
-                  <div class="featured-model-info">
-                    <p>
-                      model: 2017
-                      <span class="featured-mi-span"> 3100 mi</span>
-                      <span class="featured-hp-span"> 240HP</span>
-                      automatic
-                    </p>
-                  </div>
-                </div>
-                <div class="featured-cars-txt">
-                  <h2><a href="#">audi <span> a3</span> sedan</a></h2>
-                  <h3>$95,500</h3>
-                  <p>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                  </p>
-                </div>
-              </div>
+            <div class="featured-model-info">
+              <p>
+                model: {{ new Date().getFullYear() }}
+                <span class="featured-mi-span"> {{car.km}} mi</span>
+                <span class="featured-hp-span"> {{car.hp}}HP</span>
+                {{car.transmision}}
+              </p>
             </div>
           </div>
-          <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="single-featured-cars">
-                <div class="featured-img-box">
-                  <div class="featured-cars-img">
-                    <img src="@/assets/images/featured-cars/fc4.png" alt="cars">
-                  </div>
-                  <div class="featured-model-info">
-                    <p>
-                      model: 2017
-                      <span class="featured-mi-span"> 3100 mi</span>
-                      <span class="featured-hp-span"> 240HP</span>
-                      automatic
-                    </p>
-                  </div>
-                </div>
-                <div class="featured-cars-txt">
-                  <h2><a href="#">infiniti <span>z5</span></a></h2>
-                  <h3>$36,850</h3>
-                  <p>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="single-featured-cars">
-                <div class="featured-img-box">
-                  <div class="featured-cars-img">
-                    <img src="@/assets/images/featured-cars/fc5.png" alt="cars">
-                  </div>
-                  <div class="featured-model-info">
-                    <p>
-                      model: 2017
-                      <span class="featured-mi-span"> 3100 mi</span>
-                      <span class="featured-hp-span"> 240HP</span>
-                      automatic
-                    </p>
-                  </div>
-                </div>
-                <div class="featured-cars-txt">
-                  <h2><a href="#">porsche <span>718</span> cayman</a></h2>
-                  <h3>$48,500</h3>
-                  <p>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="single-featured-cars">
-                <div class="featured-img-box">
-                  <div class="featured-cars-img">
-                    <img src="@/assets/images/featured-cars/fc7.png" alt="cars">
-                  </div>
-                  <div class="featured-model-info">
-                    <p>
-                      model: 2017
-                      <span class="featured-mi-span"> 3100 mi</span>
-                      <span class="featured-hp-span"> 240HP</span>
-                      automatic
-                    </p>
-                  </div>
-                </div>
-                <div class="featured-cars-txt">
-                  <h2><a href="#"><span>bmw 8-</span>series coupe</a></h2>
-                  <h3>$56,000</h3>
-                  <p>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6">
-              <div class="single-featured-cars">
-                <div class="featured-img-box">
-                  <div class="featured-cars-img">
-                    <img src="@/assets/images/featured-cars/fc8.png" alt="cars">
-                  </div>
-                  <div class="featured-model-info">
-                    <p>
-                      model: 2017
-                      <span class="featured-mi-span"> 3100 mi</span>
-                      <span class="featured-hp-span"> 240HP</span>
-                      automatic
-                    </p>
-                  </div>
-                </div>
-                <div class="featured-cars-txt">
-                  <h2><a href="#">BMW <span> x</span>series-6</a></h2>
-                  <h3>$75,800</h3>
-                  <p>
-                    Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.
-                  </p>
-                </div>
-              </div>
-            </div>
+          <div class="featured-cars-txt">
+            <h2><a href="#">{{car.modelo}}</a></h2>
+            <h3>${{car.precio}} <button class="rent-button">Alquilar</button></h3>
+            <p>{{car.descripcion}}</p>
           </div>
         </div>
-      </div><!--/.container-->
+      </div>
+    </div>
+  </div>
+     
     </section><!--/.featured-cars-->
     <!--featured-cars end -->
     <!--brand strat -->
@@ -305,12 +128,37 @@ import fc8 from '@/assets/images/featured-cars/fc8.png'
   name: 'HomePage',
   data() {
     return {
+      cars: [],
       brandImages: [br1, br2, br3, br4],
       featuredImages: {
         fc1, fc2, fc3, fc4, fc5, fc7, fc8
       }
-    }}
-  };
+    }
+  },
+  methods: {
+    async fetchCars() {
+      try {
+        const token = localStorage.getItem('jwt');
+        const response = await fetch('http://localhost:8080/api/autos', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (response.ok) {
+          this.cars = await response.json();
+        } else {
+          console.error('Failed to fetch cars');
+        }
+      } catch (error) {
+        console.error('Error fetching cars:', error);
+      }
+    }
+  },
+  mounted() {
+    this.fetchCars();
+  }
+};
 </script>
 <style scoped>
 
