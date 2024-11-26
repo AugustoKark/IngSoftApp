@@ -24,6 +24,10 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+
 
 /**
  * Integration tests for the {@link AlquilerResource} REST controller.
