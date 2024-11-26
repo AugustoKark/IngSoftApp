@@ -121,8 +121,8 @@ export default {
     },
     async register() {
       if (this.registerPassword !== this.registerConfirmPassword) {
-    this.registerError = 'Las contraseñas no coinciden.';
-    return;
+        this.registerError = 'Las contraseñas no coinciden.';
+        return;
   }
 
   const userData = {
@@ -131,8 +131,6 @@ export default {
     password: this.registerPassword,
     langKey: 'es'
   };
-
-  console.log('Datos de registro a enviar:', userData);
 
   try {
     const response = await fetch('http://localhost:8080/api/register', {
@@ -145,13 +143,11 @@ export default {
 
     if (response.status === 201) {
       this.registerError = '';
-      this.loginError = '';
       this.registerUsername = '';
       this.registerEmail = '';
       this.registerPassword = '';
       this.registerConfirmPassword = '';
       this.switchToLogin();
-
     } else {
       let data = {};
       try {
@@ -159,7 +155,15 @@ export default {
       } catch (parseError) {
         console.error('Error al parsear la respuesta:', parseError);
       }
-      this.registerError = data.message || 'El registro ha fallado. Por favor, intenta nuevamente.';
+
+      // Manejar casos específicos basados en la respuesta del servidor
+      if (data.message === 'error.userexists') {
+        this.registerError = 'El usuario ya existe.';
+      } else if (data.message === 'error.emailexists') {
+        this.registerError = 'El correo electrónico ya está en uso.';
+      } else {
+        this.registerError = data.message || 'El registro ha fallado. Por favor, intenta nuevamente.';
+      }
     }
   } catch (error) {
     console.error('Error de red:', error);

@@ -1,7 +1,12 @@
 package ar.edu.um.ingsoftapp.web.rest;
 
 import ar.edu.um.ingsoftapp.domain.Alquiler;
+import ar.edu.um.ingsoftapp.domain.Auto;
+import ar.edu.um.ingsoftapp.domain.User;
 import ar.edu.um.ingsoftapp.repository.AlquilerRepository;
+import ar.edu.um.ingsoftapp.repository.AutoRepository;
+import ar.edu.um.ingsoftapp.repository.UserRepository;
+import ar.edu.um.ingsoftapp.service.dto.AlquilerDTO;
 import ar.edu.um.ingsoftapp.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +15,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,28 +43,49 @@ public class AlquilerResource {
 
     private final AlquilerRepository alquilerRepository;
 
-    public AlquilerResource(AlquilerRepository alquilerRepository) {
+    private final AutoRepository autoRepository;
+
+    private final UserRepository userRepository;
+
+    public AlquilerResource(AlquilerRepository alquilerRepository, AutoRepository autoRepository, UserRepository userRepository) {
         this.alquilerRepository = alquilerRepository;
+        this.autoRepository = autoRepository;
+        this.userRepository = userRepository;
+
     }
 
     /**
      * {@code POST  /alquilers} : Create a new alquiler.
      *
-     * @param alquiler the alquiler to create.
+     * @param alquilerDTO the alquiler to create.
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new alquiler, or with status {@code 400 (Bad Request)} if the alquiler has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<Alquiler> createAlquiler(@Valid @RequestBody Alquiler alquiler) throws URISyntaxException {
-        LOG.debug("REST request to save Alquiler : {}", alquiler);
-        if (alquiler.getId() != null) {
+    public ResponseEntity<Alquiler> createAlquiler(@Valid @RequestBody AlquilerDTO alquilerDTO) throws URISyntaxException {
+        LOG.debug("REST request to save Alquiler : {}", alquilerDTO);
+        if (alquilerDTO.getId() != null) {
             throw new BadRequestAlertException("A new alquiler cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        alquiler = alquilerRepository.save(alquiler);
-        return ResponseEntity.created(new URI("/api/alquilers/" + alquiler.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, alquiler.getId().toString()))
-            .body(alquiler);
+        Optional<Auto> auto = autoRepository.findById(alquilerDTO.getAutoId());
+        Optional<User> user = userRepository.findById(alquilerDTO.getUserId());
+
+        if (auto.isPresent() && user.isPresent()) {
+            Alquiler alquiler = new Alquiler();
+            alquiler.setDias(alquilerDTO.getDias());
+            alquiler.setAuto(auto.get());
+            alquiler.setUser(user.get());
+            double precioFinal = auto.get().getPrecio() * alquiler.getDias();
+            alquiler.setPrecioFinal(precioFinal);
+            Alquiler result = alquilerRepository.save(alquiler);
+            return ResponseEntity.created(new URI("/api/alquilers/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
+                .body(result);
+        } else {
+            throw new BadRequestAlertException("Invalid auto or user ID", ENTITY_NAME, "idinvalid");
+        }
     }
+
 
     /**
      * {@code PUT  /alquilers/:id} : Updates an existing alquiler.
@@ -177,5 +205,13 @@ public class AlquilerResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/usuario/{id}")
+    public ResponseEntity<List<AlquilerDTO>> getAlquileresByUserId(@PathVariable Long id) {
+        LOG.debug("REST request to get Alquileres by User ID : {}", id);
+        List<Alquiler> alquileres = alquilerRepository.findByUserId(id);
+        List<AlquilerDTO> alquileresDTO = alquileres.stream().map(AlquilerDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok().body(alquileresDTO);
     }
 }

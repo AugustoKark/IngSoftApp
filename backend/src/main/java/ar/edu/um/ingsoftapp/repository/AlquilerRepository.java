@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface AlquilerRepository extends JpaRepository<Alquiler, Long> {
     @Query("select alquiler from Alquiler alquiler where alquiler.user.login = ?#{authentication.name}")
     List<Alquiler> findByUserIsCurrentUser();
+
+    List<Alquiler> findByUserId(Long id);
 }

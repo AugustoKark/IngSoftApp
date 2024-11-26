@@ -3,6 +3,8 @@ package ar.edu.um.ingsoftapp.web.rest;
 import static ar.edu.um.ingsoftapp.security.SecurityUtils.AUTHORITIES_KEY;
 import static ar.edu.um.ingsoftapp.security.SecurityUtils.JWT_ALGORITHM;
 
+import ar.edu.um.ingsoftapp.service.UserService;
+import ar.edu.um.ingsoftapp.service.dto.UserDTO;
 import ar.edu.um.ingsoftapp.web.rest.vm.LoginVM;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
@@ -38,6 +40,7 @@ public class AuthenticateController {
     private static final Logger LOG = LoggerFactory.getLogger(AuthenticateController.class);
 
     private final JwtEncoder jwtEncoder;
+    private final UserService userService;
 
     @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
     private long tokenValidityInSeconds;
@@ -47,13 +50,14 @@ public class AuthenticateController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder, UserService userService) {
         this.jwtEncoder = jwtEncoder;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.userService = userService;
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+    public ResponseEntity<AuthenticationResponse> authorize(@Valid @RequestBody LoginVM loginVM) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             loginVM.getUsername(),
             loginVM.getPassword()
@@ -62,17 +66,13 @@ public class AuthenticateController {
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = this.createToken(authentication, loginVM.isRememberMe());
+        UserDTO userDTO = userService.getUserByUsername(loginVM.getUsername());
+        AuthenticationResponse response = new AuthenticationResponse(jwt, userDTO.getId());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(response, httpHeaders, HttpStatus.OK);
     }
 
-    /**
-     * {@code GET /authenticate} : check if the user is authenticated, and return its login.
-     *
-     * @param principal the authentication principal.
-     * @return the login if the user is authenticated.
-     */
     @GetMapping(value = "/authenticate", produces = MediaType.TEXT_PLAIN_VALUE)
     public String isAuthenticated(Principal principal) {
         LOG.debug("REST request to check if the current user is authenticated");
@@ -94,7 +94,6 @@ public class AuthenticateController {
             validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
         }
 
-        // @formatter:off
         JwtClaimsSet claims = JwtClaimsSet.builder()
             .issuedAt(now)
             .expiresAt(validity)

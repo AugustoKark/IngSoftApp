@@ -93,6 +93,7 @@ management:
 spring:
   application:
     name: RentalCar
+  mail: disabled
   docker:
     compose:
       enabled: true
