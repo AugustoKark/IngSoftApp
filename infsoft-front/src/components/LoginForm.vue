@@ -21,9 +21,12 @@
             <div class="field">
               <input type="password" v-model="password" placeholder="Password" required>
             </div>
+
             <div class="pass-link">
               <a href="#">Forgot password?</a>
             </div>
+            <div class="error-message">{{ loginError }}</div>
+           
             <div class="field btn">
               <div class="btn-layer"></div>
               <input type="submit" value="Login">
@@ -45,6 +48,7 @@
             <div class="field">
               <input type="password" v-model="registerConfirmPassword" placeholder="Confirm password" required>
             </div>
+            <div class="error-message">{{ registerError }}</div>
             <div class="field btn">
               <div class="btn-layer"></div>
               <input type="submit" value="Signup">
@@ -66,7 +70,9 @@ export default {
       registerUsername: '',
       registerEmail: '',
       registerPassword: '',
-      registerConfirmPassword: ''
+      registerConfirmPassword: '',
+      loginError: '',
+      registerError: ''
     };
   },
   methods: {
@@ -96,58 +102,69 @@ export default {
         console.log(data);
 
         if (response.ok) {
-          alert('Login successful');
+          
+          this.loginError = '';
           // Guarda el token en el almacenamiento local o en una cookie
           localStorage.setItem('jwt', data.jwt);
           localStorage.setItem('userId', data.userId);
           // redirige a la página de inicio
           this.$router.push('/home');
         } else {
-          alert('Login failed');
+        this.loginError = 'Nombre de usuario o contraseña incorrectos.';
+
         }
       } catch (error) {
         console.error('Network error:', error);
-        alert('Network error');
+        this.loginError = 'Error de red. Por favor, intenta nuevamente.';
+
       }
     },
     async register() {
       if (this.registerPassword !== this.registerConfirmPassword) {
-        alert('Passwords do not match');
-        return;
-      }
+    this.registerError = 'Las contraseñas no coinciden.';
+    return;
+  }
 
+  const userData = {
+    login: this.registerUsername,
+    email: this.registerEmail,
+    password: this.registerPassword,
+    langKey: 'es'
+  };
+
+  console.log('Datos de registro a enviar:', userData);
+
+  try {
+    const response = await fetch('http://localhost:8080/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    });
+
+    if (response.status === 201) {
+      this.registerError = '';
+      this.loginError = '';
+      this.registerUsername = '';
+      this.registerEmail = '';
+      this.registerPassword = '';
+      this.registerConfirmPassword = '';
+      this.switchToLogin();
+
+    } else {
+      let data = {};
       try {
-        const response = await fetch('http://localhost:8080/api/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            login: this.registerUsername,
-            email: this.registerEmail,
-            password: this.registerPassword,
-            langKey: 'es'
-          })
-        });
-
-        const data = await response.json();
-        console.log(data);
-
-        if (response.ok) {
-          alert('Registration successful');
-          this.registerUsername = '';
-        this.registerEmail = '';
-        this.registerPassword = '';
-        this.registerConfirmPassword = '';
-        // Switch to login form
-        this.switchToLogin();
-        } else {
-          alert('Registration failed');
-        }
-      } catch (error) {
-        console.error('Network error:', error);
-        alert('Network error');
+        data = await response.json();
+      } catch (parseError) {
+        console.error('Error al parsear la respuesta:', parseError);
       }
+      this.registerError = data.message || 'El registro ha fallado. Por favor, intenta nuevamente.';
+    }
+  } catch (error) {
+    console.error('Error de red:', error);
+    this.registerError = 'Error de red. Por favor, intenta nuevamente.';
+  }
     }
   },
   mounted() {
@@ -397,5 +414,10 @@ form .btn input[type="submit"] {
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+.error-message {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
 }
 </style>

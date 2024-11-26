@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="rentalSuccessMessage" :class="['success-message', { 'fade-out': fadeOut }]">
+      {{ rentalSuccessMessage }}
+    </div>
     <section id="home" class="welcome-hero">
       <!-- top-area Start -->
       <div class="top-area">
@@ -41,6 +44,8 @@
     </section><!--/.welcome-hero-->
     <!--welcome-hero end -->
     <!--featured-cars start -->
+    <section id="blog" class="blog"></section><!--/.blog-->
+       
     <section id="featured-cars" class="featured-cars">
       <div class="featured-cars-content">
         <div class="row">
@@ -126,7 +131,7 @@
       </div>
     </section>
     <!--blog start -->
-    <section id="blog" class="blog"></section><!--/.blog-->
+   
   </div>
 </template>
 
@@ -150,6 +155,8 @@ export default {
   data() {
     return {
       cars: [],
+      fadeOut: false,
+      rentalSuccessMessage:'',
       brandImages: [br1, br2, br3, br4],
       featuredImages: {
         fc1, fc2, fc3, fc4, fc5, fc7, fc8
@@ -190,30 +197,61 @@ export default {
     },
     async confirmRental() {
       try {
-        const userId = localStorage.getItem('userId');
-        const response = await fetch('http://localhost:8080/api/alquilers', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-          },
-          body: JSON.stringify({
-            dias: this.dias,
-            autoId: this.selectedCar.id,
-            userId: userId
-          })
-        });
+    const userId = localStorage.getItem('userId');
+    const response = await fetch('http://localhost:8080/api/alquilers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: JSON.stringify({
+        dias: this.dias,
+        autoId: this.selectedCar.id,
+        userId: userId
+      })
+    });
 
-        if (response.ok) {
-          alert('Alquiler exitoso');
-          this.closeModal();
-        } else {
-          alert('Error en el alquiler');
-        }
-      } catch (error) {
-        console.error('Error en el alquiler:', error);
-        alert('Error en el alquiler');
-      }
+    if (response.ok) {
+      this.rentalSuccessMessage = 'Alquiler exitoso';
+      this.fadeOut = false; // Asegurarse de que el mensaje esté completamente visible
+      this.closeModal();
+
+      // Esperar 3 segundos antes de iniciar el desvanecimiento
+      setTimeout(() => {
+        this.fadeOut = true;
+
+        // Esperar a que termine la animación antes de ocultar el mensaje
+        setTimeout(() => {
+          this.rentalSuccessMessage = '';
+          this.fadeOut = false; // Reiniciar para futuros mensajes
+        }, 500); // Debe coincidir con la duración de la transición de opacidad
+      }, 3000); // Tiempo que el mensaje permanece visible
+    } else {
+      this.rentalSuccessMessage = 'Error en el alquiler';
+      this.fadeOut = false;
+
+      setTimeout(() => {
+        this.fadeOut = true;
+        setTimeout(() => {
+          this.rentalSuccessMessage = '';
+          this.fadeOut = false;
+        }, 500);
+      }, 3000);
+    }
+  } catch (error) {
+    console.error('Error en el alquiler:', error);
+    this.rentalSuccessMessage = 'Error en el alquiler';
+    this.fadeOut = false;
+
+    setTimeout(() => {
+      this.fadeOut = true;
+      setTimeout(() => {
+        this.rentalSuccessMessage = '';
+        this.fadeOut = false;
+      }, 500);
+    }, 3000);
+  }
+  
     },
    handleLogout() {
       this.showLogoutModal = true;
@@ -317,7 +355,24 @@ button:hover {
   color: rgb(80, 137, 202);
   margin-bottom: 45px;
 }
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4CAF50; /* Color verde para indicar éxito */
+  color: white;
+  padding: 15px 20px;
+  border-radius: 4px;
+  font-size: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+  z-index: 1000;
+}
 
+.success-message.fade-out {
+  opacity: 0;
+}
 
 
 </style>
