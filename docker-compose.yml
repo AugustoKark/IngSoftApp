@@ -5,11 +5,10 @@ services:
     image: backend-image:latest # Cambia esto por el nombre de tu imagen backend
     container_name: backend
     build:
-      context: ./backend/.devcontainer
-      dockerfile: Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile 
     ports:
       - "8080:8080"
-      
     networks:
       - shared-network
 
