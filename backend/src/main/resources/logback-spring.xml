@@ -27,7 +27,15 @@
     </root>
     -->
 
-    <logger name="ar.edu.um.ingsoftapp" level="INFO"/>
+    <!-- <logger name="ar.edu.um.ingsoftapp" level="INFO"/> -->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>logstash:50000</destination>
+        <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
+    </appender>
+
+    <logger name="ar.edu.um.ingsoftapp" level="INFO">
+        <appender-ref ref="LOGSTASH"/>
+    </logger>
 
     <logger name="angus.activation" level="WARN"/>
     <logger name="jakarta.activation" level="WARN"/>
@@ -69,6 +77,9 @@
     <springProperty name="log.level" source="logging.level.root" defaultValue="INFO" />
     <root level="${log.level}">
         <appender-ref ref="CONSOLE" />
+
+
+        <appender-ref ref="LOGSTASH"/>
     </root>
 
     <!-- Prevent logback from outputting its own status -->

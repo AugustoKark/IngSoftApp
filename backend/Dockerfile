@@ -5,7 +5,7 @@ FROM jhipster/jhipster:latest
 WORKDIR /app
 
 # Add the application JAR file
-COPY target/rental-car-0.0.3-SNAPSHOT.jar app.jar
+COPY target/rental-car-0.0.5-SNAPSHOT.jar app.jar
 
 # Expose the port the application runs on
 EXPOSE 8080

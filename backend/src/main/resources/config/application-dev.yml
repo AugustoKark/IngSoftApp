@@ -12,8 +12,13 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
-
 logging:
+  use-json-format: false
+  logstash:
+    enabled: true
+    host: localhost
+    port: 50000
+    queue-size: 512
   level:
     ROOT: DEBUG
     tech.jhipster: DEBUG
@@ -101,7 +106,7 @@ jhipster:
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
-      enabled: true
+      enabled: false
       host: localhost
       port: 50000
       ring-buffer-size: 512
