@@ -1,6 +1,7 @@
 {
   "generator-jhipster": {
     "applicationType": "monolith",
+    "appsFolders": ["backend"],
     "authenticationType": "jwt",
     "baseName": "RentalCar",
     "buildTool": "maven",
@@ -12,6 +13,7 @@
     "databaseType": "sql",
     "devDatabaseType": "h2Disk",
     "devServerPort": 4200,
+    "directoryPath": "../",
     "enableHibernateCache": true,
     "enableSwaggerCodegen": false,
     "enableTranslation": true,
@@ -24,6 +26,7 @@
     "messageBroker": false,
     "microfrontend": null,
     "microfrontends": [],
+    "monitoring": "prometheus",
     "monorepository": true,
     "nativeLanguage": "en",
     "packageName": "ar.edu.um.ingsoftapp",
@@ -32,7 +35,7 @@
     "searchEngine": false,
     "serverPort": null,
     "serverSideOptions": [],
-    "serviceDiscoveryType": false,
+    "serviceDiscoveryType": "no",
     "skipCommitHook": true,
     "syncUserWithIdp": null,
     "testFrameworks": [],

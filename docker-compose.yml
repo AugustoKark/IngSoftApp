@@ -1,29 +1,28 @@
-version: "3.8"
+# version: "3.8"
 
-services:
-  backend:
-    image: backend-image:latest # Cambia esto por el nombre de tu imagen backend
-    container_name: backend
-    build:
-      context: ./backend/.devcontainer
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-      
-    networks:
-      - shared-network
+# services:
+#   backend:
+#     image: backend-image:latest # Cambia esto por el nombre de tu imagen backend
+#     container_name: backend
+#     build:
+#       context: ./backend
+#       dockerfile: Dockerfile 
+#     ports:
+#       - "8080:8080"
+#     networks:
+#       - shared-network
 
-  frontend:
-    image: frontend-image:latest # Cambia esto por el nombre de tu imagen frontend
-    container_name: frontend
-    build:
-      context: ./infsoft-front
-      dockerfile: Dockerfile
-    ports:
-      - "3000:80" # Puerto 3000 para el frontend accesible desde el host
-    networks:
-      - shared-network
+#   frontend:
+#     image: frontend-image:latest # Cambia esto por el nombre de tu imagen frontend
+#     container_name: frontend
+#     build:
+#       context: ./infsoft-front
+#       dockerfile: Dockerfile
+#     ports:
+#       - "3000:80" # Puerto 3000 para el frontend accesible desde el host
+#     networks:
+#       - shared-network
 
-networks:
-  shared-network:
-    external: true
+# networks:
+#   shared-network:
+#     external: true

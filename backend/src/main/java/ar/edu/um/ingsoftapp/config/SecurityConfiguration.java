@@ -53,7 +53,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:8100", "http://localhost:9000"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:8100", "http://localhost:9000","http://localhost:3000", "http://frontend:3000" ));
         config.setAllowedMethods(Arrays.asList("*"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setExposedHeaders(Arrays.asList("Authorization", "Link", "X-Total-Count", "X-rentalCarApp-alert", "X-rentalCarApp-error", "X-rentalCarApp-params"));
