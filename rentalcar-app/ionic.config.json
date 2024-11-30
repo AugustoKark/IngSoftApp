@@ -1,0 +1,7 @@
+{
+  "name": "rentalcar-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue-vite"
+}
