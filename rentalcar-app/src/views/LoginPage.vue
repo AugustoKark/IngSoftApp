@@ -1,62 +1,81 @@
 <template>
-    <div class="container">
-      <div class="wrapper">
-        <div class="title-text">
-          <div class="title login">Login</div>
-          <div class="title signup">Register</div>
-        </div>
-        <div class="form-container">
-          <div class="slide-controls">
-            <input type="radio" name="slide" id="login" checked>
-            <input type="radio" name="slide" id="signup">
-            <label for="login" class="slide login">Login</label>
-            <label for="signup" class="slide signup">Register</label>
-            <div class="slider-tab"></div>
+  <ion-page>
+    <ion-header :translucent="true">
+      <ion-toolbar>
+        <ion-title>Login</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content :fullscreen="true">
+      <div class="container">
+        <div class="wrapper">
+          <div class="title-text">
+            <div class="title login">Login</div>
+            <div class="title signup">Register</div>
           </div>
-          <div class="form-inner">
-            <form @submit.prevent="login" class="login">
-              <div class="field">
-                <input type="text" v-model="username" placeholder="Username" required>
-              </div>
-              <div class="field">
-                <input type="password" v-model="password" placeholder="Password" required>
-              </div>
-              <div class="pass-link">
-                <a href="#" @click.prevent="redirectToRecoveryPassword">Forgot password?</a>
-              </div>
-              <div class="error-message">{{ loginError }}</div>
-              <div class="field btn">
-                <div class="btn-layer"></div>
-                <input type="submit" value="Login">
-              </div>
-              <div class="signup-link">
-                Not a member? <a href="">Register now</a>
-              </div>
-            </form>
-            <form @submit.prevent="register" class="signup">
-              <div class="field">
-                <input type="text" v-model="registerUsername" placeholder="Username" required>
-              </div>
-              <div class="field">
-                <input type="text" v-model="registerEmail" placeholder="Email Address" required>
-              </div>
-              <div class="field">
-                <input type="password" v-model="registerPassword" placeholder="Password" required>
-              </div>
-              <div class="field">
-                <input type="password" v-model="registerConfirmPassword" placeholder="Confirm password" required>
-              </div>
-              <div class="error-message">{{ registerError }}</div>
-              <div class="field btn">
-                <div class="btn-layer"></div>
-                <input type="submit" value="Signup">
-              </div>
-            </form>
+          <div class="form-container">
+            <div class="slide-controls">
+              <input type="radio" name="slide" id="login" checked>
+              <input type="radio" name="slide" id="signup">
+              <label for="login" class="slide login">Login</label>
+              <label for="signup" class="slide signup">Register</label>
+              <div class="slider-tab"></div>
+            </div>
+            <div class="form-inner">
+              <form @submit.prevent="login" class="login">
+                <div class="field">
+                  <input class= "fondoboton" type="text" v-model="username" placeholder="Username" required>
+                </div>
+                <div class="field">
+                  <input type="password"  class= "fondoboton" v-model="password" placeholder="Password" required>
+                </div>
+                <div class="pass-link">
+                  <a href="#" >Forgot password?</a>
+                </div>
+                <div class="error-message">{{ loginError }}</div>
+                <div class="field btn">
+                  <div class="btn-layer"></div>
+                  <input type="submit" value="Login">
+                </div>
+                <div class="notamember">
+                  Not a member? <a href="">Register now</a>
+                </div>
+                <div class="field btn" href="/home">
+
+                  <router-link to="/home">
+                  <ion-button class="guest-button">Sign as Guest</ion-button>
+                </router-link>
+                </div>
+              </form>
+              <form @submit.prevent="register" class="signup">
+                <div class="field">
+                  <input type="text" class= "fondoboton" v-model="registerUsername" placeholder="Username" required>
+                </div>
+                <div class="field">
+                  <input type="text" class= "fondoboton" v-model="registerEmail" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                  <input type="password" class= "fondoboton" v-model="registerPassword" placeholder="Password" required>
+                </div>
+                <div class="field">
+                  <input type="password" class= "fondoboton" v-model="registerConfirmPassword" placeholder="Confirm password" required>
+                </div>
+                <div class="error-message">{{ registerError }}</div>
+                <div class="field btn">
+                  <div class="btn-layer"></div>
+                  <input type="submit" value="Signup">
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </template>
+      
+
+    </ion-content>
+  </ion-page>
+</template>
+
   
   <script setup>
   import { ref, onMounted } from 'vue';
@@ -101,7 +120,11 @@
       loginError.value = 'Error de red. Por favor, intenta nuevamente.';
     }
   }
-  
+  function signAsGuest() {
+  // Aquí puedes agregar la lógica para el inicio de sesión como invitado
+  // Por ejemplo, puedes redirigir al usuario a la página de inicio
+  router.push('/home');
+}
   async function register() {
     if (registerPassword.value !== registerConfirmPassword.value) {
       registerError.value = 'Las contraseñas no coinciden.';
@@ -208,6 +231,9 @@
     background: #427cfa;
     color: #fff;
   }
+  .notamember{
+    color: #080808;
+  }
   
   .container {
     display: flex;
@@ -265,7 +291,7 @@
   }
   
   .slide-controls label.signup {
-    color: #000;
+    color: #d80808;
   }
   
   .slide-controls .slider-tab {
@@ -414,4 +440,16 @@
     margin-top: 10px;
     text-align: center;
   }
+  .fondoboton{
+    background-color: #cfcdcd;
+    color: rgb(7, 7, 7);
+  }
+
+  .guest-button {
+  --background: #36a5d1; /* Cambia el color de fondo del botón */
+  --color: white; /* Cambia el color del texto del botón */
+  margin-top: 20px;
+}
+
+
   </style>

@@ -2,12 +2,16 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button>Home</ion-button>
-          <ion-button>Mis alquileres</ion-button>
-          <ion-button>Login</ion-button>
-        </ion-buttons>
         <ion-title>Rental Car</ion-title>
+        <ion-buttons slot="end">
+        <router-link to="/home">
+          <ion-button class="custom-button">Home</ion-button>
+        </router-link >
+          <ion-button class="custom-button">Mis alquileres</ion-button>
+          <router-link to="/login">
+            <ion-button class="custom-button">Login</ion-button>
+          </router-link>
+        </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
@@ -28,8 +32,8 @@
                   <!-- <img :src="require(`@/assets/images/featured-cars/${car.img}.png`)" alt="cars"> -->
                 </div>
                 <div class="featured-model-info">
-                  <p>
-                    model: {{ new Date().getFullYear() }}
+                  <p color="black">
+                    model: {{car.modelo}}
                     <span class="featured-mi-span"> {{car.km}} Km</span>
                     <span class="featured-hp-span"> {{car.hp}}HP</span>
                     {{car.transmision}}
@@ -38,15 +42,17 @@
               </div>
               <div class="featured-cars-txt">
                 <h2><a href="#">{{car.modelo}}</a></h2>
-                <h3>${{car.precio}} <ion-button class="rent-button" >Alquilar</ion-button></h3>
-                <p>{{car.descripcion}}</p>
+                <h3>${{car.precio}} <ion-button class="rent-button">Alquilar</ion-button></h3>
+                <div class="car-description">
+                  <p>{{car.descripcion}}</p>
+              </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </ion-content>
-  </ion-page>
+  </ion-page> 
 </template>
 
 <script setup lang="ts">
@@ -105,18 +111,18 @@ const cars = ref([
 <style scoped>
 .welcome-hero-txt {
   position: relative;
-  background-image: url('@/assets/images/welcome-banner.jpg'); /* Asegúrate de que la ruta sea correcta */
+  background-image: url('@/assets/images/welcome-hero.jpg');
   text-align: center;
-  background-size: cover;
+  /* background-size: cover; */
   background-position: center;
   z-index: 1;
   width: 100%;
-  height: 40vh; /* Ajusta la altura según sea necesario */
+  height: 40vh; 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: white; /* Asegúrate de que el texto sea visible sobre la imagen */
+  color: white; 
 }
 
 .featured-cars-content {
@@ -135,17 +141,31 @@ const cars = ref([
 
 .featured-model-info p {
   margin: 0;
+  color: black;
 }
 
 .featured-cars-txt h2 {
+  color: black;
+
   margin: 0;
 }
 
 .featured-cars-txt h3 {
+  color: black;
+
   margin: 0;
 }
 
 .rent-button {
   margin-left: 10px;
+}
+
+.custom-button {
+  /* --background: #ffffff;  */
+  --color: white; /* Cambia el color del texto del botón */
+}
+.car-description p {
+  color: black;
+  margin: 0;
 }
 </style>
