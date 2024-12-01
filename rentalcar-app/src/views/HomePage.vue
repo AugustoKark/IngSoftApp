@@ -29,6 +29,7 @@
             <div class="single-featured-cars">
               <div class="featured-img-box">
                 <div class="featured-cars-img">
+                  <img :src="car.img" alt="cars">
                   <!-- <img :src="require(`@/assets/images/featured-cars/${car.img}.png`)" alt="cars"> -->
                 </div>
                 <div class="featured-model-info">
@@ -59,6 +60,16 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
 
+// Importa las imágenes
+import fc1 from '@/images/featured-cars/fc1.png';
+
+import fc2 from '@/images/featured-cars/fc2.png';
+import fc3 from '@/images/featured-cars/fc3.png';
+import fc4 from '@/images/featured-cars/fc4.png';
+
+import autohome from '@/images/welcome-hero/welcome-banner.jpg';
+
+
 const isLoggedIn = ref(false);
 const cars = ref([
   {
@@ -68,7 +79,7 @@ const cars = ref([
     km: 10000,
     hp: 200,
     transmision: 'Automatico',
-    img: 'car1',
+    img: fc1,
     descripcion: 'El Toyota Corolla es un automóvil del segmento C producido por el fabricante japonés Toyota. Se trata de uno de los automóviles más vendidos de la historia.'
   },
   {
@@ -78,7 +89,8 @@ const cars = ref([
     km: 8000,
     hp: 180,
     transmision: 'Automatico',
-    img: 'car2',
+    img: fc1,
+    
     descripcion: 'El Honda Civic es un automóvil del segmento C producido por el fabricante japonés Honda. Es un automóvil muy popular en todo el mundo.'
   },
   {
@@ -88,7 +100,7 @@ const cars = ref([
     km: 12000,
     hp: 150,
     transmision: 'Automatico',
-    img: 'car3',
+    img: fc1,
     descripcion: 'El Nissan Sentra es un automóvil del segmento C producido por el fabricante japonés Nissan. Es un automóvil muy popular en todo el mundo.'
   },
   {
@@ -98,7 +110,7 @@ const cars = ref([
     km: 9000,
     hp: 170,
     transmision: 'Automatico',
-    img: 'car4',
+    img: fc1,
     descripcion: 'El Chevrolet Cruze es un automóvil del segmento C producido por el fabricante estadounidense Chevrolet. Es un automóvil muy popular en todo el mundo.'
   }
 ]);
@@ -111,9 +123,9 @@ const cars = ref([
 <style scoped>
 .welcome-hero-txt {
   position: relative;
-  background-image: url('@/assets/images/welcome-hero.jpg');
+  background-image: url('@/images/welcome-hero/welcome-banner.jpg') ;
   text-align: center;
-  /* background-size: cover; */
+  background-size: cover;
   background-position: center;
   z-index: 1;
   width: 100%;
@@ -131,7 +143,7 @@ const cars = ref([
 }
 
 .featured-cars-img img {
-  width: 100%;
+  width: 50%;
   height: auto;
 }
 
