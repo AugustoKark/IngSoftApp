@@ -32,6 +32,10 @@
                   <img :src="car.img" alt="cars">
                   <!-- <img :src="require(`@/assets/images/featured-cars/${car.img}.png`)" alt="cars"> -->
                 </div>
+                
+              <div class="featured-cars-txt">
+                
+                <h2><a href="#">{{car.modelo}}</a></h2>
                 <div class="featured-model-info">
                   <p color="black">
                     model: {{car.modelo}}
@@ -41,12 +45,10 @@
                   </p>
                 </div>
               </div>
-              <div class="featured-cars-txt">
-                <h2><a href="#">{{car.modelo}}</a></h2>
-                <h3>${{car.precio}} <ion-button class="rent-button">Alquilar</ion-button></h3>
-                <div class="car-description">
+              <div class="car-description">
                   <p>{{car.descripcion}}</p>
               </div>
+                <h3 class="precioo">${{car.precio}} <ion-button class="rent-button">Alquilar</ion-button></h3>
               </div>
             </div>
           </div>
@@ -74,45 +76,44 @@ const isLoggedIn = ref(false);
 const cars = ref([
   {
     id: 1,
-    modelo: 'Toyota Corolla',
+    modelo: 'BMW 6-series gran coupe',
     precio: 100,
-    km: 10000,
-    hp: 200,
-    transmision: 'Automatico',
+    km: 3100,
+    hp: 240,
+    transmision: 'Automatic',
     img: fc1,
-    descripcion: 'El Toyota Corolla es un automóvil del segmento C producido por el fabricante japonés Toyota. Se trata de uno de los automóviles más vendidos de la historia.'
+    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
   },
   {
     id: 2,
-    modelo: 'Honda Civic',
-    precio: 120,
-    km: 8000,
-    hp: 180,
-    transmision: 'Automatico',
+    modelo: 'BMW 6-series gran coupe',
+    precio: 100,
+    km: 3100,
+    hp: 240,
+    transmision: 'Automatic',
     img: fc1,
-    
-    descripcion: 'El Honda Civic es un automóvil del segmento C producido por el fabricante japonés Honda. Es un automóvil muy popular en todo el mundo.'
+    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
   },
   {
     id: 3,
-    modelo: 'Nissan Sentra',
-    precio: 90,
-    km: 12000,
-    hp: 150,
-    transmision: 'Automatico',
+    modelo: 'BMW 6-series gran coupe',
+    precio: 100,
+    km: 3100,
+    hp: 240,
+    transmision: 'Automatic',
     img: fc1,
-    descripcion: 'El Nissan Sentra es un automóvil del segmento C producido por el fabricante japonés Nissan. Es un automóvil muy popular en todo el mundo.'
+    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
   },
   {
     id: 4,
-    modelo: 'Chevrolet Cruze',
-    precio: 110,
-    km: 9000,
-    hp: 170,
-    transmision: 'Automatico',
+    modelo: 'BMW 6-series gran coupe',
+    precio: 100,
+    km: 3100,
+    hp: 240,
+    transmision: 'Automatic',
     img: fc1,
-    descripcion: 'El Chevrolet Cruze es un automóvil del segmento C producido por el fabricante estadounidense Chevrolet. Es un automóvil muy popular en todo el mundo.'
-  }
+    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
+  },
 ]);
 
 
@@ -179,5 +180,8 @@ const cars = ref([
 .car-description p {
   color: black;
   margin: 0;
+}
+.precioo {
+  color: black;
 }
 </style>
