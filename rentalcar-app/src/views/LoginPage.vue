@@ -41,9 +41,9 @@
                   Not a member? <a href="">Register now</a>
                 </div>
                 <div class="field btn">
-                  <router-link to="/home">
-                    <ion-button class="guest-button"  >Sign as Guest</ion-button>
-                  </router-link>
+                  <!-- <router-link to="/home"> -->
+                    <ion-button class="guest-button" @click="toHome" >Sign as Guest</ion-button>
+                  <!-- </router-link> -->
                 </div>
               </form>
               <form @submit.prevent="register" class="signup">
@@ -172,9 +172,10 @@ function switchToLogin() {
   loginBtn.click();
 }
 
-toHome = () => {
-  router.push('/home');
+function toHome() {
+  router.push('/home'); // Navigate to the home page without using the
 };
+
 
 onMounted(() => {
   const loginText = document.querySelector(".title-text .login");
