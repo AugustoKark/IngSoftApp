@@ -3,10 +3,16 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-title>Login</ion-title>
+        <ion-buttons slot="end">
+        <router-link to="/home">
+          <ion-button class="custom-button">Sign as Guest</ion-button>
+        </router-link >
+        </ion-buttons>  
+        
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
+    <ion-content >
       <div class="container">
         <div class="wrapper">
           <div class="title-text">
@@ -76,6 +82,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/vue';
 
 const router = useRouter();
 

@@ -8,14 +8,25 @@
           <ion-button class="custom-button">Home</ion-button>
         </router-link >
           <ion-button class="custom-button">Mis alquileres</ion-button>
-          <router-link to="/login">
+          <!-- <router-link to="/login">
+            <ion-button class="custom-button">Login</ion-button>
+          </router-link> -->
+          <ion-button
+            class="custom-button"
+            v-if="isLoggedIn"
+            @click="logout"
+          >
+            Logout
+          </ion-button>
+          <router-link to="/login" v-else>
             <ion-button class="custom-button">Login</ion-button>
           </router-link>
+
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content :fullscreen="true">
+    <ion-content >
       <div class="welcome-hero-txt">
         <h2>Alquila el auto de tus sueños a un buen precio</h2>
         <p>
@@ -60,7 +71,11 @@
 
 <script setup lang="ts">
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+// import router  from '@/router';
+import { useRouter } from 'vue-router'; 
+import { watchEffect } from 'vue';
+
 
 // Importa las imágenes
 import fc1 from '@/images/featured-cars/fc1.png';
@@ -68,12 +83,30 @@ import fc1 from '@/images/featured-cars/fc1.png';
 import fc2 from '@/images/featured-cars/fc2.png';
 import fc3 from '@/images/featured-cars/fc3.png';
 import fc4 from '@/images/featured-cars/fc4.png';
+import fc5 from '@/images/featured-cars/fc5.png';
+import fc6 from '@/images/featured-cars/fc6.png';
+import fc7 from '@/images/featured-cars/fc7.png';
+import fc8 from '@/images/featured-cars/fc8.png';
 
-import autohome from '@/images/welcome-hero/welcome-banner.jpg';
 
+
+
+// Define un mapa de imágenes
+const imageMap: { [key: string]: string } = {
+  'fc1': fc1,
+  'fc2': fc2,
+  'fc3': fc3,
+  'fc4': fc4,
+  'fc5': fc5,
+  'fc6': fc6,
+  'fc7': fc7,
+  'fc8': fc8,
+};
 
 const isLoggedIn = ref(false);
-const cars = ref([
+const router = useRouter();
+
+const defaultCars = [
   {
     id: 1,
     modelo: 'BMW 6-series gran coupe',
@@ -114,7 +147,86 @@ const cars = ref([
     img: fc1,
     descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
   },
-]);
+];
+
+const cars = ref([...defaultCars]);
+
+
+// onMounted(async () => {
+const fetchCars = async () => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    isLoggedIn.value = true; // Actualiza el estado de inicio de sesión
+
+    try {
+      const response = await fetch('http://localhost:8080/api/autos', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        
+        // Asignar imágenes basadas en el imageMap
+        data.forEach((car: any) => {
+          if (imageMap[car.img]) {
+            car.img = imageMap[car.img];
+          } else {
+            // Asigna una imagen por defecto si no se encuentra en el mapa
+            car.img = fc1; // o cualquier otra imagen por defecto
+          }
+        });
+        
+      
+        console.log('Autos obtenidos:', data);
+        cars.value = data;
+      } else {
+        console.error('Error al obtener los autos:', response.statusText);
+        // Puedes mantener los autos por defecto o manejar el error según tu lógica
+      }
+    } catch (error) {
+      console.error('Error de red al obtener los autos:', error);
+      // Puedes mantener los autos por defecto o manejar el error según tu lógica
+    }
+  } else {
+    // No hay token, mantener los autos por defecto
+    console.log('No se encontró token, usando datos por defecto.');
+    cars.value= defaultCars;
+  }
+};
+
+
+const logout = () => {
+  localStorage.removeItem('jwt'); // Elimina el token del localStorage
+  isLoggedIn.value = false; // Actualiza el estado de inicio de sesión
+  console.log('Sesión cerrada');
+  cars.value = [...defaultCars]; // Restablece los autos a los valores predeterminados
+  router.push('/home'); // Redirige a la página de inicio de sesión
+
+};
+
+const resetCarsToDefault = () => {
+  cars.value = [...defaultCars];
+};
+
+watchEffect(() => {
+  if (isLoggedIn.value) {
+    fetchCars();
+  } else {
+    resetCarsToDefault();
+  }
+});
+
+
+
+
+onMounted(() => {
+  fetchCars();
+});
+
 
 
 
