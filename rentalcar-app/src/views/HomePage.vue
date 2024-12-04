@@ -60,7 +60,10 @@
               <div class="car-description">
                   <p>{{car.descripcion}}</p>
               </div>
-                <h3 class="precioo">${{car.precio}} <ion-button class="rent-button">Alquilar</ion-button></h3>
+                <h3 class="precioo">${{car.precio}} 
+                  <!-- <ion-button class="rent-button">Alquilar</ion-button> -->
+                  <ion-button class="rent-button" v-if="car.button">Alquilar</ion-button>
+                </h3>
               </div>
             </div>
           </div>
@@ -116,7 +119,8 @@ const defaultCars = [
     hp: 240,
     transmision: 'Automatic',
     img: fc1,
-    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
+    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.',
+    button: false
   },
   {
     id: 2,
@@ -126,7 +130,8 @@ const defaultCars = [
     hp: 240,
     transmision: 'Automatic',
     img: fc1,
-    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
+    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.',
+    button: false
   },
   {
     id: 3,
@@ -136,7 +141,8 @@ const defaultCars = [
     hp: 240,
     transmision: 'Automatic',
     img: fc1,
-    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
+    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.',
+    button: false
   },
   {
     id: 4,
@@ -146,7 +152,8 @@ const defaultCars = [
     hp: 240,
     transmision: 'Automatic',
     img: fc1,
-    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.'
+    descripcion: 'El BMW 6 Series es un automóvil deportivo de lujo producido por el fabricante alemán BMW. Es un automóvil muy popular en todo el mundo.',
+    button: false
   },
 ];
 
@@ -175,9 +182,11 @@ const fetchCars = async () => {
         data.forEach((car: any) => {
           if (imageMap[car.img]) {
             car.img = imageMap[car.img];
+            car.button = true;
           } else {
             // Asigna una imagen por defecto si no se encuentra en el mapa
             car.img = fc1; // o cualquier otra imagen por defecto
+            car.button = true;
           }
         });
         
