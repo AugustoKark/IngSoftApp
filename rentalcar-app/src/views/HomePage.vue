@@ -8,6 +8,7 @@
           <ion-button class="custom-button">Home</ion-button>
         </router-link >
           <ion-button class="custom-button">Mis alquileres</ion-button>
+          <ion-button class="custom-button" @click="refresh">Refresh</ion-button>
           <!-- <router-link to="/login">
             <ion-button class="custom-button">Login</ion-button>
           </router-link> -->
@@ -219,6 +220,10 @@ watchEffect(() => {
     resetCarsToDefault();
   }
 });
+
+const refresh = () => {
+  fetchCars();
+};
 
 
 
