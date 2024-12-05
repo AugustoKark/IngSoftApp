@@ -126,10 +126,30 @@ services:
     networks:
       - shared-network
 
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: jenkins
+    user: root
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+    ports:
+      - "8088:8080"
+      - "50001:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - shared-network
+    privileged: true
+
+
+
 networks:
   shared-network:
     # driver: bridge
     external: true
 
 volumes:
+  jenkins_home:
+    driver: local
   elasticsearch:

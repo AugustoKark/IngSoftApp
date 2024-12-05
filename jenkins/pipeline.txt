@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+
+    parameters {
+        string(name: 'DOCKER_TAG', defaultValue: 'latest', description: 'Tag para la imágen de docker ')
+    }
+    environment {
+        DOCKERHUB_CREDENTIALS = 'TOKEEEEEN'
+        DOCKERHUB_REPO = 'augustokark99/ingsoftfinal'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AugustoKark/IngSoftApp.git'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh './mvnw test'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dir('backend') {
+                        sh """./mvnw package -Pdev jib:build -Djib.to.image=augustokark99/ingsoftfinal:${params.DOCKER_TAG} -Djib.to.auth.username=augustokark99 -Djib.to.auth.password=TOKEEEEN"""
+                    }
+                }
+            }
+        }
+
+    }
+}
