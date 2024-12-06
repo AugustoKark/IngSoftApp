@@ -7,7 +7,9 @@
         <router-link to="/home">
           <ion-button class="custom-button">Home</ion-button>
         </router-link >
-          <ion-button class="custom-button">Mis alquileres</ion-button>
+        <router-link to="/myrentals">
+          <ion-button class="custom-button" v-if="isLoggedIn">Mis alquileres</ion-button>
+        </router-link>
           <ion-button class="custom-button" @click="refresh">Refresh</ion-button>
           <!-- <router-link to="/login">
             <ion-button class="custom-button">Login</ion-button>
@@ -62,7 +64,8 @@
               </div>
                 <h3 class="precioo">${{car.precio}} 
                   <!-- <ion-button class="rent-button">Alquilar</ion-button> -->
-                  <ion-button class="rent-button" v-if="car.button">Alquilar</ion-button>
+                  <!-- <ion-button class="rent-button" v-if="car.button">Alquilar</ion-button> -->
+                  <ion-button class="rent-button" v-if="car.button" @click="openModal(car)">Alquilar</ion-button>
                 </h3>
               </div>
             </div>
@@ -70,6 +73,19 @@
         </div>
       </div>
     </ion-content>
+    <section>
+      <div v-if="showModal" class="modal">
+        <div class="modal-content">
+          <span class="close" @click="closeModal">&times;</span>
+          <h2>Seguro que quieres alquilar {{ selectedCar.modelo }}?</h2>
+          <div>
+            <label for="dias">Número de días:</label>
+            <input type="number" v-model="dias" min="1" required>
+          </div>
+          <button @click="confirmRental">Aceptar</button>
+        </div>
+      </div>
+    </section>
   </ion-page> 
 </template>
 
@@ -109,6 +125,11 @@ const imageMap: { [key: string]: string } = {
 
 const isLoggedIn = ref(false);
 const router = useRouter();
+
+const showModal = ref(false);
+const selectedCar = ref(null);
+const dias = ref(1);
+
 
 const defaultCars = [
   {
@@ -159,6 +180,16 @@ const defaultCars = [
 
 const cars = ref([...defaultCars]);
 
+const openModal = (car: any) => {
+  selectedCar.value = car;
+  showModal.value = true;
+};
+
+const closeModal = () => {
+  showModal.value = false;
+  selectedCar.value = null;
+  dias.value = 1;
+};
 
 // onMounted(async () => {
 const fetchCars = async () => {
@@ -242,6 +273,37 @@ onMounted(() => {
 });
 
 
+const confirmRental = async () => {
+  if (!selectedCar.value || dias.value < 1) {
+    console.error('Datos inválidos para el alquiler');
+    return;
+  }
+
+  try {
+    const userId = localStorage.getItem('userId');
+    const response = await fetch('http://localhost:8080/api/alquilers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+      },
+      body: JSON.stringify({
+        dias: dias.value,
+        autoId: selectedCar.value.id, // Usando selectedCar
+        userId: userId
+      })
+    });
+
+    if (response.ok) {
+      console.log('Alquiler exitoso');
+      closeModal();
+    } else {
+      console.error('Error al alquilar el auto:', await response.text());
+    }
+  } catch (error) {
+    console.error('Error de red al alquilar el auto:', error);
+  }
+};
 
 
 
@@ -310,4 +372,30 @@ onMounted(() => {
 .precioo {
   color: black;
 }
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  background-color: black;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
 </style>
