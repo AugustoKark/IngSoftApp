@@ -168,7 +168,7 @@ const defaultCarsLogInNoConnection = [
     hp: 240,
     transmision: 'automatic',
     descripcion: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.',
-    img: 'fc1',
+    img: fc1,
     button: true
   },
   {
@@ -179,7 +179,7 @@ const defaultCarsLogInNoConnection = [
     hp: 240,
     transmision: 'automatic',
     descripcion: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.',
-    img: 'fc2',
+    img: fc2,
     button: true
   },
   {
@@ -190,7 +190,7 @@ const defaultCarsLogInNoConnection = [
     hp: 240,
     transmision: 'automatic',
     descripcion: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.',
-    img: 'fc3',
+    img: fc3,
     button: true
   },
   {
@@ -201,7 +201,7 @@ const defaultCarsLogInNoConnection = [
     hp: 240,
     transmision: 'manual',
     descripcion: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.',
-    img: 'fc4',
+    img: fc4,
     button: true
   },
   {
@@ -212,7 +212,7 @@ const defaultCarsLogInNoConnection = [
     hp: 240,
     transmision: 'manual',
     descripcion: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.',
-    img: 'fc4',
+    img: fc4,
     button: true
   },
   {
@@ -223,7 +223,7 @@ const defaultCarsLogInNoConnection = [
     hp: 240,
     transmision: 'automatic',
     descripcion: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.',
-    img: 'fc5',
+    img: fc5,
     button: true
   },
   {
@@ -234,7 +234,7 @@ const defaultCarsLogInNoConnection = [
     hp: 240,
     transmision: 'automatic',
     descripcion: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.',
-    img: 'fc7',
+    img: fc7,
     button: true
   },
   {
@@ -245,7 +245,7 @@ const defaultCarsLogInNoConnection = [
     hp: 240,
     transmision: 'automatic',
     descripcion: 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non.',
-    img: 'fc8',
+    img: fc8,
     button: true
   },
 ];
@@ -268,7 +268,7 @@ const updateOnlineStatus = () => {
   isOnline.value = navigator.onLine;
   console.log('Estado de conexión:', navigator.onLine ? 'Online' : 'Offline');
   if (isOnline.value && isLoggedIn.value) {
-    syncPendingRentals();
+    // syncPendingRentals();
     fetchCars();
   }
 };
